@@ -1,0 +1,61 @@
+{
+  "moods": {
+    "Happy": {
+      "message": "That's great! Keep spreading the positivity.",
+      "songs": [
+        { "text": "Upbeat Chill Vibes", "url": "https://www.youtube.com/watch?v=iqg3-OXz0dY" },
+        { "text": "Happy Pop", "url": "https://www.youtube.com/watch?v=ZbZSe6N_BXs" }
+      ]
+    },
+    "Sad": {
+      "message": "It's okay to feel sad sometimes. Try talking to someone or take a break.",
+      "songs": [
+        { "text": "Healing Piano", "url": "https://www.youtube.com/watch?v=yN5G-hnD2Cw" },
+        { "text": "Comforting Chill Mix", "url": "https://www.youtube.com/watch?v=rUxyKA_-grg" }
+      ]
+    },
+    "Stressed": {
+      "message": "You're under pressure. Take a moment to breathe and relax.",
+      "songs": [
+        { "text": "Lo-fi Study Beats", "url": "https://www.youtube.com/watch?v=jfKfPfyJRdk" },
+        { "text": "Mindfulness Music", "url": "https://www.youtube.com/watch?v=c7B9bZyH_Q0" }
+      ]
+    },
+    "Angry": {
+      "message": "Try deep breathing or a short walk. It's okay to take space.",
+      "songs": [
+        { "text": "Cool Down Instrumental", "url": "https://www.youtube.com/watch?v=2OEL4P1Rz04" },
+        { "text": "Peaceful Guitar", "url": "https://www.youtube.com/watch?v=VtKbi0M91Dg" }
+      ]
+    },
+    "Anxious": {
+      "message": "Try grounding yourself in the present moment. You're not alone.",
+      "songs": [
+        { "text": "Relaxing Forest Sounds", "url": "https://www.youtube.com/watch?v=OdIJ2x3nxzQ" },
+        { "text": "Calm Ocean Waves", "url": "https://www.youtube.com/watch?v=1ZYbU82GVz4" }
+      ]
+    }
+  },
+  "chatbot": [
+    {
+      "keywords": ["exam", "viva", "project", "deadline", "presentation"],
+      "reply": "Academic stress is tough. Try planning your time and take breaks. You’re doing your best."
+    },
+    {
+      "keywords": ["lonely", "alone", "nobody", "friend"],
+      "reply": "Feeling lonely is hard. Try reaching out to someone or joining an activity group."
+    },
+    {
+      "keywords": ["homesick", "miss home", "missing home"],
+      "reply": "It’s natural to miss home. Try talking with family or looking at photos for comfort."
+    },
+    {
+      "keywords": ["tip", "help", "support"],
+      "reply": "Try journaling your feelings, getting fresh air, and practicing self-compassion."
+    },
+    {
+      "keywords": ["anxious", "panic", "afraid", "worry"],
+      "reply": "Take deep breaths, count backwards from 10, and remind yourself: this will pass."
+    }
+  ]
+}
