@@ -4,351 +4,486 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouthGuard - Mental Health Companion</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Onboarding Modal -->
+    <div id="onboarding-modal" class="modal">
+        <div class="modal-content onboarding-content">
+            <div class="onboarding-step active" data-step="1">
+                <div class="onboarding-icon">??</div>
+                <h1>Welcome to YouthGuard</h1>
+                <p class="onboarding-text">Your personal mental health companion. We are here to support you on your wellness journey.</p>
+                <div class="onboarding-features">
+                    <div class="feature"><i class="fas fa-clipboard-check"></i> Mental Health Screening</div>
+                    <div class="feature"><i class="fas fa-heart"></i> Mood Tracking</div>
+                    <div class="feature"><i class="fas fa-comments"></i> 24/7 Support Chat</div>
+                    <div class="feature"><i class="fas fa-spa"></i> Self-Help Tools</div>
+                </div>
+                <button class="btn-primary" onclick="nextOnboarding()">Get Started <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="onboarding-step" data-step="2">
+                <div class="onboarding-icon">??</div>
+                <h2>Important Notice</h2>
+                <div class="notice-box">
+                    <i class="fas fa-info-circle"></i>
+                    <p><strong>This quiz is not a diagnosis.</strong> It is a guide to help you reflect on your mental well-being. If you are experiencing severe symptoms, please consult a mental health professional.</p>
+                </div>
+                <div class="privacy-notice">
+                    <i class="fas fa-shield-alt"></i>
+                    <p><strong>Your Privacy Matters:</strong> Your answers stay private and are stored only on your device. We do not share your data with anyone.</p>
+                </div>
+                <button class="btn-primary" onclick="nextOnboarding()">I Understand <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="onboarding-step" data-step="3">
+                <div class="onboarding-icon">??</div>
+                <h2>You Are Not Alone</h2>
+                <p class="onboarding-text">If you are in crisis, help is available 24/7.</p>
+                <div class="crisis-preview">
+                    <div class="crisis-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Sumithrayo: +94 11 269 2909</span>
+                    </div>
+                    <div class="crisis-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>CCCline: 1333</span>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="closeOnboarding()">Start Your Journey <i class="fas fa-heart"></i></button>
+            </div>
+            <div class="onboarding-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Crisis Alert Modal -->
+    <div id="crisis-modal" class="modal hidden">
+        <div class="modal-content crisis-content">
+            <div class="crisis-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h2>We Are Here For You</h2>
+            </div>
+            <p class="crisis-text">It seems like you might be going through a difficult time. Your safety is important to us.</p>
+            <div class="crisis-resources">
+                <h3>Please reach out for immediate support:</h3>
+                <a href="tel:+94112692909" class="crisis-link">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <strong>Sumithrayo</strong>
+                        <span>+94 11 269 2909 (24/7)</span>
+                    </div>
+                </a>
+                <a href="tel:1333" class="crisis-link">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <strong>CCCline</strong>
+                        <span>1333 (24/7)</span>
+                    </div>
+                </a>
+                <a href="tel:1990" class="crisis-link emergency">
+                    <i class="fas fa-ambulance"></i>
+                    <div>
+                        <strong>Suwaseriya Ambulance</strong>
+                        <span>1990</span>
+                    </div>
+                </a>
+                <a href="tel:119" class="crisis-link emergency">
+                    <i class="fas fa-police"></i>
+                    <div>
+                        <strong>Police Emergency</strong>
+                        <span>119</span>
+                    </div>
+                </a>
+            </div>
+            <button class="btn-secondary" onclick="closeCrisisModal()">I Have Reached Out</button>
+        </div>
+    </div>
+
     <div class="app-container">
         <!-- Header -->
         <header class="header">
             <div class="logo">
-                <i class="fas fa-shield-heart"></i>
+                <div class="logo-icon">
+                    <i class="fas fa-shield-heart"></i>
+                </div>
                 <span>YouthGuard</span>
             </div>
             <nav class="nav">
-                <button class="nav-btn active" data-section="quiz">
-                    <i class="fas fa-heart-pulse"></i> Mood Check
-                </button>
-                <button class="nav-btn" data-section="history">
-                    <i class="fas fa-chart-line"></i> History
-                </button>
-                <button class="nav-btn" data-section="chatbot">
-                    <i class="fas fa-comments"></i> Talk to Us
-                </button>
-                <button class="nav-btn" data-section="resources">
-                    <i class="fas fa-book-open"></i> Resources
-                </button>
+                <button class="nav-btn active" data-section="home"><i class="fas fa-home"></i> Home</button>
+                <button class="nav-btn" data-section="quiz"><i class="fas fa-clipboard-check"></i> Assessment</button>
+                <button class="nav-btn" data-section="mood"><i class="fas fa-smile"></i> Mood</button>
+                <button class="nav-btn" data-section="chatbot"><i class="fas fa-comments"></i> Talk</button>
+                <button class="nav-btn" data-section="tools"><i class="fas fa-toolbox"></i> Tools</button>
+                <button class="nav-btn" data-section="resources"><i class="fas fa-book-medical"></i> Resources</button>
             </nav>
-            <button id="theme-toggle" class="theme-toggle" title="Toggle Theme">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-sun"></i>
                 <i class="fas fa-moon"></i>
             </button>
         </header>
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Quiz Section -->
-            <section id="quiz-section" class="section active">
+            <!-- Home Section -->
+            <section id="home-section" class="section active">
                 <div class="hero">
                     <h1>How are you feeling today?</h1>
-                    <p>Select your current mood to get personalized support and track your emotional wellness</p>
+                    <p>Take a moment to check in with yourself. Your mental health matters.</p>
                 </div>
                 
-                <div class="mood-grid">
-                    <button class="mood-card happy" data-mood="Happy">
-                        <span class="mood-emoji">??</span>
-                        <span class="mood-label">Happy</span>
-                        <span class="mood-desc">Feeling great</span>
+                <div class="quick-actions">
+                    <button class="action-card" onclick="showSection("quiz")">
+                        <div class="action-icon"><i class="fas fa-clipboard-check"></i></div>
+                        <h3>Take Assessment</h3>
+                        <p>PHQ-9 & GAD-7 screening</p>
                     </button>
-                    <button class="mood-card calm" data-mood="Calm">
-                        <span class="mood-emoji">??</span>
-                        <span class="mood-label">Calm</span>
-                        <span class="mood-desc">At peace</span>
+                    <button class="action-card" onclick="showSection("mood")">
+                        <div class="action-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>Track Mood</h3>
+                        <p>View your mood history</p>
                     </button>
-                    <button class="mood-card sad" data-mood="Sad">
-                        <span class="mood-emoji">??</span>
-                        <span class="mood-label">Sad</span>
-                        <span class="mood-desc">Feeling down</span>
+                    <button class="action-card" onclick="showSection("chatbot")">
+                        <div class="action-icon"><i class="fas fa-comments"></i></div>
+                        <h3>Talk to Someone</h3>
+                        <p>24/7 support chat</p>
                     </button>
-                    <button class="mood-card stressed" data-mood="Stressed">
-                        <span class="mood-emoji">??</span>
-                        <span class="mood-label">Stressed</span>
-                        <span class="mood-desc">Under pressure</span>
-                    </button>
-                    <button class="mood-card angry" data-mood="Angry">
-                        <span class="mood-emoji">??</span>
-                        <span class="mood-label">Angry</span>
-                        <span class="mood-desc">Frustrated</span>
-                    </button>
-                    <button class="mood-card anxious" data-mood="Anxious">
-                        <span class="mood-emoji">??</span>
-                        <span class="mood-label">Anxious</span>
-                        <span class="mood-desc">Worried</span>
-                    </button>
-                    <button class="mood-card tired" data-mood="Tired">
-                        <span class="mood-emoji">??</span>
-                        <span class="mood-label">Tired</span>
-                        <span class="mood-desc">Exhausted</span>
-                    </button>
-                    <button class="mood-card excited" data-mood="Excited">
-                        <span class="mood-emoji">??</span>
-                        <span class="mood-label">Excited</span>
-                        <span class="mood-desc">Energetic</span>
+                    <button class="action-card" onclick="showSection("tools")">
+                        <div class="action-icon"><i class="fas fa-spa"></i></div>
+                        <h3>Self-Care Tools</h3>
+                        <p>Breathing & meditation</p>
                     </button>
                 </div>
 
-                <div id="mood-result" class="mood-result hidden">
-                    <div class="result-card">
-                        <div class="result-header">
-                            <span id="result-emoji" class="result-emoji"></span>
-                            <h2 id="result-title"></h2>
+                <!-- Mood History Preview -->
+                <div class="mood-preview">
+                    <h2><i class="fas fa-chart-area"></i> Your Mood This Week</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-checkins">0</div>
+                            <div class="stat-label">Total Check-ins</div>
                         </div>
-                        <p id="result-message"></p>
-                        
-                        <div class="recommendations">
-                            <div class="rec-section">
-                                <h3><i class="fas fa-music"></i> Music for You</h3>
-                                <div id="songs-list" class="songs-list"></div>
-                            </div>
-                            
-                            <div class="rec-section">
-                                <h3><i class="fas fa-lightbulb"></i> Recommended Activities</h3>
-                                <div id="activities-list" class="activities-list"></div>
-                            </div>
-                            
-                            <div class="rec-section">
-                                <h3><i class="fas fa-quote-left"></i> Daily Inspiration</h3>
-                                <blockquote id="daily-quote"></blockquote>
-                            </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="current-streak">0</div>
+                            <div class="stat-label">Day Streak</div>
                         </div>
-                        
-                        <div class="result-actions">
-                            <button class="btn-secondary" onclick="resetQuiz()">
-                                <i class="fas fa-redo"></i> Check Again
+                        <div class="stat-card">
+                            <div class="stat-value" id="positive-days">0</div>
+                            <div class="stat-label">Positive Days</div>
+                        </div>
+                    </div>
+                    <canvas id="moodChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Quiz Section -->
+            <section id="quiz-section" class="section">
+                <div class="quiz-container">
+                    <div id="quiz-start">
+                        <div class="quiz-intro">
+                            <div class="quiz-icon"><i class="fas fa-clipboard-list"></i></div>
+                            <h2>Mental Health Assessment</h2>
+                            <p>This assessment uses validated screening tools (PHQ-9 for depression and GAD-7 for anxiety) to help you understand your mental well-being.</p>
+                            <div class="quiz-info">
+                                <div class="info-item"><i class="fas fa-clock"></i> Takes 3-5 minutes</div>
+                                <div class="info-item"><i class="fas fa-question-circle"></i> 16 questions</div>
+                                <div class="info-item"><i class="fas fa-lock"></i> Private & secure</div>
+                            </div>
+                            <button class="btn-primary btn-large" onclick="startQuiz()">
+                                <i class="fas fa-play"></i> Start Assessment
                             </button>
-                            <button class="btn-primary" onclick="document.querySelector('[data-section=\"chatbot\"]').click()">
-                                <i class="fas fa-comment-dots"></i> Talk About It
+                        </div>
+                    </div>
+
+                    <div id="quiz-questions" class="hidden">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="progress-text">Question <span id="current-q">1</span> of <span id="total-q">16</span></div>
+                        
+                        <div class="question-card">
+                            <div class="question-category" id="question-category">Depression Screening (PHQ-9)</div>
+                            <h3 id="question-text">Loading...</h3>
+                            <div class="question-options" id="question-options">
+                                <!-- Options generated by JS -->
+                            </div>
+                        </div>
+
+                        <div class="section-feedback hidden" id="section-feedback">
+                            <div class="feedback-icon"><i class="fas fa-lightbulb"></i></div>
+                            <p id="feedback-text"></p>
+                        </div>
+                    </div>
+
+                    <div id="quiz-results" class="hidden">
+                        <div class="results-header">
+                            <h2>Your Assessment Results</h2>
+                            <p>Remember, this is not a diagnosis. Use these insights to guide your wellness journey.</p>
+                        </div>
+
+                        <div class="results-grid">
+                            <div class="result-card" id="depression-result">
+                                <div class="result-icon"><i class="fas fa-cloud"></i></div>
+                                <h3>Depression (PHQ-9)</h3>
+                                <div class="result-score">
+                                    <span class="score-value" id="phq9-score">0</span>/27
+                                </div>
+                                <div class="result-level" id="phq9-level">Minimal</div>
+                                <div class="result-bar">
+                                    <div class="result-fill" id="phq9-fill"></div>
+                                </div>
+                                <p class="result-desc" id="phq9-desc"></p>
+                            </div>
+
+                            <div class="result-card" id="anxiety-result">
+                                <div class="result-icon"><i class="fas fa-bolt"></i></div>
+                                <h3>Anxiety (GAD-7)</h3>
+                                <div class="result-score">
+                                    <span class="score-value" id="gad7-score">0</span>/21
+                                </div>
+                                <div class="result-level" id="gad7-level">Minimal</div>
+                                <div class="result-bar">
+                                    <div class="result-fill" id="gad7-fill"></div>
+                                </div>
+                                <p class="result-desc" id="gad7-desc"></p>
+                            </div>
+                        </div>
+
+                        <div class="recommendations" id="recommendations">
+                            <h3><i class="fas fa-user-md"></i> Recommendations</h3>
+                            <div id="recommendations-list"></div>
+                        </div>
+
+                        <div class="crisis-warning hidden" id="crisis-warning">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Your responses suggest you may be experiencing significant distress. Please consider reaching out to a mental health professional or crisis support service.</p>
+                            <button class="btn-primary" onclick="showCrisisModal()">
+                                <i class="fas fa-phone"></i> Get Help Now
+                            </button>
+                        </div>
+
+                        <div class="results-actions">
+                            <button class="btn-secondary" onclick="retakeQuiz()">
+                                <i class="fas fa-redo"></i> Retake Assessment
+                            </button>
+                            <button class="btn-primary" onclick="showSection("resources")">
+                                <i class="fas fa-book-medical"></i> View Resources
                             </button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- History Section -->
-            <section id="history-section" class="section">
-                <div class="hero">
-                    <h1>Your Wellness Journey</h1>
-                    <p>Track your emotional patterns and celebrate your progress</p>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <i class="fas fa-calendar-check"></i>
-                        <div class="stat-info">
-                            <span class="stat-value" id="total-checkins">0</span>
-                            <span class="stat-label">Total Check-ins</span>
-                        </div>
+            <!-- Mood Section -->
+            <section id="mood-section" class="section">
+                <div class="mood-tracker">
+                    <h2><i class="fas fa-smile"></i> How are you feeling right now?</h2>
+                    <p>Select the emoji that best represents your current mood:</p>
+                    
+                    <div class="mood-faces">
+                        <button class="mood-face" data-mood="happy" data-score="5">
+                            <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f60a.svg" alt="Happy">
+                            <span>Happy</span>
+                        </button>
+                        <button class="mood-face" data-mood="calm" data-score="4">
+                            <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f60c.svg" alt="Calm">
+                            <span>Calm</span>
+                        </button>
+                        <button class="mood-face" data-mood="neutral" data-score="3">
+                            <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f610.svg" alt="Neutral">
+                            <span>Okay</span>
+                        </button>
+                        <button class="mood-face" data-mood="sad" data-score="2">
+                            <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f622.svg" alt="Sad">
+                            <span>Sad</span>
+                        </button>
+                        <button class="mood-face" data-mood="anxious" data-score="2">
+                            <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f630.svg" alt="Anxious">
+                            <span>Anxious</span>
+                        </button>
+                        <button class="mood-face" data-mood="angry" data-score="1">
+                            <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f620.svg" alt="Angry">
+                            <span>Angry</span>
+                        </button>
                     </div>
-                    <div class="stat-card">
-                        <i class="fas fa-smile"></i>
-                        <div class="stat-info">
-                            <span class="stat-value" id="positive-days">0</span>
-                            <span class="stat-label">Positive Days</span>
-                        </div>
+
+                    <div class="mood-note">
+                        <label>Add a note (optional):</label>
+                        <textarea id="mood-note-input" placeholder="What is on your mind?"></textarea>
                     </div>
-                    <div class="stat-card">
-                        <i class="fas fa-fire"></i>
-                        <div class="stat-info">
-                            <span class="stat-value" id="current-streak">0</span>
-                            <span class="stat-label">Day Streak</span>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-heart"></i>
-                        <div class="stat-info">
-                            <span class="stat-value" id="dominant-mood">-</span>
-                            <span class="stat-label">Top Mood</span>
-                        </div>
-                    </div>
+
+                    <button class="btn-primary" onclick="saveMood()">
+                        <i class="fas fa-save"></i> Save Mood Entry
+                    </button>
                 </div>
 
-                <div class="history-container">
-                    <div class="chart-container">
-                        <h3><i class="fas fa-chart-area"></i> Mood Trends (Last 7 Days)</h3>
-                        <canvas id="mood-chart"></canvas>
-                    </div>
-                    
-                    <div class="recent-entries">
-                        <h3><i class="fas fa-history"></i> Recent Entries</h3>
-                        <div id="entries-list" class="entries-list">
-                            <p class="empty-state">No entries yet. Start tracking your mood today!</p>
+                <div class="mood-history">
+                    <h2><i class="fas fa-history"></i> Your Mood History</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="mood-total">0</div>
+                            <div class="stat-label">Total Entries</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="mood-streak">0</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="mood-positive">0%</div>
+                            <div class="stat-label">Positive Moods</div>
                         </div>
                     </div>
+                    <canvas id="moodHistoryChart"></canvas>
+                    <div id="mood-entries-list" class="mood-entries"></div>
                 </div>
             </section>
 
             <!-- Chatbot Section -->
             <section id="chatbot-section" class="section">
-                <div class="hero">
-                    <h1>Your Personal Wellness Companion</h1>
-                    <p>Share what is on your mind. I am here to listen, support, and guide you 24/7.</p>
-                </div>
-                
-                <div class="chat-container">
-                    <div class="chat-header">
-                        <div class="chat-avatar">
+                <div class="chatbot-container">
+                    <div class="chatbot-header">
+                        <div class="chatbot-avatar">
                             <i class="fas fa-robot"></i>
-                            <span class="online-status"></span>
                         </div>
-                        <div class="chat-info">
-                            <h3>YouthGuard Assistant</h3>
-                            <span>Always here for you</span>
+                        <div class="chatbot-info">
+                            <h3>YouthGuard Support</h3>
+                            <p><span class="online-dot"></span> Always here to listen</p>
                         </div>
                     </div>
-                    
-                    <div id="chat-messages" class="chat-messages">
+                    <div class="chatbot-messages" id="chat-messages">
                         <div class="message bot-message">
-                            <div class="message-avatar">
-                                <i class="fas fa-robot"></i>
-                            </div>
                             <div class="message-content">
-                                <p>Hello! I am your YouthGuard companion. I am here to support you through whatever you are experiencing. How are you feeling today? ??</p>
-                                <span class="message-time">Just now</span>
+                                <p>Hello! I am here to support you. How are you feeling today? You can share anything that is on your mind - I am here to listen without judgment.</p>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="quick-replies">
-                        <button class="quick-reply" onclick="sendQuickReply("I am feeling anxious")">Feeling anxious</button>
-                        <button class="quick-reply" onclick="sendQuickReply("I am stressed about exams")">Exam stress</button>
-                        <button class="quick-reply" onclick="sendQuickReply("I feel lonely")">Feeling lonely</button>
-                        <button class="quick-reply" onclick="sendQuickReply("I need motivation")">Need motivation</button>
+                    <div class="chatbot-quick-replies">
+                        <button onclick="sendQuickReply("I am feeling anxious")">Feeling anxious</button>
+                        <button onclick="sendQuickReply("I am stressed about exams")">Exam stress</button>
+                        <button onclick="sendQuickReply("I feel lonely")">Feeling lonely</button>
+                        <button onclick="sendQuickReply("I need tips")">Need tips</button>
                     </div>
-                    
-                    <div class="chat-input-container">
+                    <div class="chatbot-input">
                         <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
-                        <button id="send-btn" class="send-btn">
+                        <button onclick="sendChatMessage()">
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
                 </div>
             </section>
 
+            <!-- Tools Section -->
+            <section id="tools-section" class="section">
+                <h2><i class="fas fa-toolbox"></i> Self-Care Tools</h2>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fas fa-wind"></i></div>
+                        <h3>Breathing Exercise</h3>
+                        <p>4-7-8 breathing technique to reduce anxiety</p>
+                        <button class="btn-primary" onclick="openBreathing()">Start</button>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fas fa-book"></i></div>
+                        <h3>Mood Journal</h3>
+                        <p>Write down your thoughts and feelings</p>
+                        <button class="btn-primary" onclick="openJournal()">Write</button>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fas fa-quote-left"></i></div>
+                        <h3>Daily Affirmations</h3>
+                        <p>Positive statements to boost your mood</p>
+                        <button class="btn-primary" onclick="showAffirmation()">Read</button>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fas fa-clock"></i></div>
+                        <h3>Mindfulness Timer</h3>
+                        <p>Timed meditation sessions</p>
+                        <button class="btn-primary" onclick="openTimer()">Meditate</button>
+                    </div>
+                </div>
+            </section>
+
             <!-- Resources Section -->
             <section id="resources-section" class="section">
-                <div class="hero">
-                    <h1>Your Wellness Toolkit</h1>
-                    <p>Curated resources to support your mental health journey</p>
-                </div>
+                <h2><i class="fas fa-book-medical"></i> Mental Health Resources</h2>
                 
-                <div class="resources-categories">
-                    <button class="category-btn active" data-category="all">All</button>
-                    <button class="category-btn" data-category="exercises">Exercises</button>
-                    <button class="category-btn" data-category="articles">Articles</button>
-                    <button class="category-btn" data-category="videos">Videos</button>
-                    <button class="category-btn" data-category="tools">Tools</button>
+                <div class="resources-category">
+                    <h3><i class="fas fa-phone-alt"></i> Sri Lanka Crisis Support</h3>
+                    <div class="resources-grid">
+                        <a href="tel:+94112692909" class="resource-card urgent">
+                            <div class="resource-icon"><i class="fas fa-heart"></i></div>
+                            <h4>Sumithrayo</h4>
+                            <p>24/7 emotional support & suicide prevention</p>
+                            <span class="resource-contact">+94 11 269 2909</span>
+                        </a>
+                        <a href="tel:1333" class="resource-card urgent">
+                            <div class="resource-icon"><i class="fas fa-hands-helping"></i></div>
+                            <h4>CCCline</h4>
+                            <p>24/7 mental health crisis support</p>
+                            <span class="resource-contact">1333</span>
+                        </a>
+                        <a href="tel:1990" class="resource-card emergency">
+                            <div class="resource-icon"><i class="fas fa-ambulance"></i></div>
+                            <h4>Suwaseriya Ambulance</h4>
+                            <p>Emergency medical services</p>
+                            <span class="resource-contact">1990</span>
+                        </a>
+                        <a href="tel:119" class="resource-card emergency">
+                            <div class="resource-icon"><i class="fas fa-shield-alt"></i></div>
+                            <h4>Police Emergency</h4>
+                            <p>Police emergency hotline</p>
+                            <span class="resource-contact">119</span>
+                        </a>
+                    </div>
                 </div>
-                
-                <div class="resources-grid">
-                    <div class="resource-card" data-category="exercises">
-                        <div class="resource-image">
-                            <i class="fas fa-wind"></i>
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-tag">Exercise</span>
-                            <h3>4-7-8 Breathing Technique</h3>
-                            <p>A powerful breathing exercise to reduce anxiety and help you fall asleep faster.</p>
-                            <button class="btn-primary" onclick="startBreathing()">
-                                <i class="fas fa-play"></i> Start Exercise
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="resource-card" data-category="exercises">
-                        <div class="resource-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <i class="fas fa-spa"></i>
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-tag">Exercise</span>
-                            <h3>5-Minute Meditation</h3>
-                            <p>Quick guided meditation for busy days. Perfect for beginners.</p>
-                            <a href="https://www.youtube.com/watch?v=inpok4MKVLM" target="_blank" class="resource-link">
-                                <i class="fas fa-external-link-alt"></i> Watch Video
-                            </a>
+
+                <div class="resources-category">
+                    <h3><i class="fas fa-globe"></i> International Support</h3>
+                    <div class="resources-grid">
+                        <a href="tel:988" class="resource-card">
+                            <div class="resource-icon"><i class="fas fa-phone"></i></div>
+                            <h4>988 Suicide & Crisis Lifeline</h4>
+                            <p>US - Call or text 988</p>
+                        </a>
+                        <div class="resource-card">
+                            <div class="resource-icon"><i class="fas fa-comment-dots"></i></div>
+                            <h4>Crisis Text Line</h4>
+                            <p>Text HOME to 741741</p>
                         </div>
                     </div>
-                    
-                    <div class="resource-card" data-category="articles">
-                        <div class="resource-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                            <i class="fas fa-brain"></i>
+                </div>
+
+                <div class="resources-category">
+                    <h3><i class="fas fa-lightbulb"></i> Self-Help Resources</h3>
+                    <div class="resources-grid">
+                        <div class="resource-card">
+                            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400" alt="Meditation" class="resource-img">
+                            <h4>Mindfulness Meditation</h4>
+                            <p>Learn techniques to stay present</p>
+                            <a href="https://www.mindful.org/meditation/mindfulness-getting-started/" target="_blank" class="resource-link">Learn More <i class="fas fa-external-link-alt"></i></a>
                         </div>
-                        <div class="resource-content">
-                            <span class="resource-tag">Article</span>
-                            <h3>Understanding Anxiety</h3>
-                            <p>Learn about the science behind anxiety and evidence-based coping strategies.</p>
-                            <a href="https://www.who.int/news-room/fact-sheets/detail/anxiety-disorders" target="_blank" class="resource-link">
-                                <i class="fas fa-readme"></i> Read Article
-                            </a>
+                        <div class="resource-card">
+                            <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400" alt="Yoga" class="resource-img">
+                            <h4>Yoga for Mental Health</h4>
+                            <p>Physical movement for emotional wellness</p>
+                            <a href="https://www.yogajournal.com/poses/yoga-for-anxiety/" target="_blank" class="resource-link">Learn More <i class="fas fa-external-link-alt"></i></a>
                         </div>
-                    </div>
-                    
-                    <div class="resource-card" data-category="videos">
-                        <div class="resource-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                            <i class="fas fa-video"></i>
+                        <div class="resource-card">
+                            <img src="https://images.unsplash.com/photo-1517842645767-c639042777db?w=400" alt="Journaling" class="resource-img">
+                            <h4>Journaling Prompts</h4>
+                            <p>Writing exercises for self-reflection</p>
+                            <a href="https://positivepsychology.com/journaling-therapy/" target="_blank" class="resource-link">Learn More <i class="fas fa-external-link-alt"></i></a>
                         </div>
-                        <div class="resource-content">
-                            <span class="resource-tag">Video</span>
-                            <h3>Stress Management Techniques</h3>
-                            <p>Harvard Health expert shares practical tips for managing daily stress.</p>
-                            <a href="https://www.youtube.com/watch?v=0fL-pn80sU8" target="_blank" class="resource-link">
-                                <i class="fas fa-play-circle"></i> Watch Now
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="resource-card" data-category="tools">
-                        <div class="resource-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                            <i class="fas fa-pen-fancy"></i>
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-tag">Tool</span>
-                            <h3>Journal Prompts Generator</h3>
-                            <p>Daily prompts to help you reflect, process emotions, and practice gratitude.</p>
-                            <button class="btn-primary" onclick="showJournalPrompts()">
-                                <i class="fas fa-magic"></i> Get Prompts
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="resource-card" data-category="articles">
-                        <div class="resource-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
-                            <i class="fas fa-moon"></i>
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-tag">Article</span>
-                            <h3>Sleep Hygiene Guide</h3>
-                            <p>Science-backed tips for better sleep quality and establishing healthy routines.</p>
-                            <a href="https://www.sleepfoundation.org/sleep-hygiene" target="_blank" class="resource-link">
-                                <i class="fas fa-readme"></i> Read Guide
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="resource-card" data-category="videos">
-                        <div class="resource-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
-                            <i class="fas fa-dumbbell"></i>
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-tag">Video</span>
-                            <h3>Yoga for Mental Health</h3>
-                            <p>15-minute yoga flow designed to reduce stress and improve mood.</p>
-                            <a href="https://www.youtube.com/watch?v=v7AYKMP6rOE" target="_blank" class="resource-link">
-                                <i class="fas fa-play-circle"></i> Start Yoga
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="resource-card" data-category="tools">
-                        <div class="resource-image" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-tag">Emergency</span>
-                            <h3>Crisis Support Hotlines</h3>
-                            <p>24/7 support resources when you need immediate help. You are not alone.</p>
-                            <button class="btn-primary btn-emergency" onclick="showCrisisInfo()">
-                                <i class="fas fa-info-circle"></i> View Resources
-                            </button>
+                        <div class="resource-card">
+                            <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=400" alt="Sleep" class="resource-img">
+                            <h4>Sleep Hygiene</h4>
+                            <p>Tips for better sleep quality</p>
+                            <a href="https://www.sleepfoundation.org/sleep-hygiene" target="_blank" class="resource-link">Learn More <i class="fas fa-external-link-alt"></i></a>
                         </div>
                     </div>
                 </div>
@@ -358,90 +493,75 @@
         <!-- Breathing Modal -->
         <div id="breathing-modal" class="modal hidden">
             <div class="modal-content">
-                <button class="close-btn" onclick="closeBreathing()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <div class="breathing-exercise">
-                    <div class="breathing-circle">
-                        <div class="circle-inner">
-                            <span id="breathing-text">Breathe In</span>
-                            <span id="breathing-timer">4</span>
-                        </div>
+                <button class="close-btn" onclick="closeBreathing()">&times;</button>
+                <div class="breathing-container">
+                    <div class="breathing-circle" id="breathing-circle">
+                        <span id="breathing-text">Breathe In</span>
                     </div>
-                    <p class="breathing-instruction">Follow the rhythm - Inhale... Hold... Exhale...</p>
-                    <div class="breathing-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill"></div>
-                        </div>
-                        <span class="progress-text">Cycle 1 of 5</span>
-                    </div>
+                    <p class="breathing-instruction">Follow the circle: Inhale as it expands, exhale as it contracts</p>
                 </div>
             </div>
         </div>
 
-        <!-- Journal Prompts Modal -->
+        <!-- Journal Modal -->
         <div id="journal-modal" class="modal hidden">
             <div class="modal-content">
-                <button class="close-btn" onclick="closeJournalModal()">
-                    <i class="fas fa-times"></i>
-                </button>
+                <button class="close-btn" onclick="closeJournal()">&times;</button>
+                <h2><i class="fas fa-book"></i> Mood Journal</h2>
                 <div class="journal-prompts">
-                    <h2><i class="fas fa-book"></i> Today is Journal Prompts</h2>
-                    <div id="prompts-container" class="prompts-container"></div>
-                    <button class="btn-primary" onclick="generateNewPrompts()">
-                        <i class="fas fa-sync"></i> New Prompts
+                    <p class="prompt">Prompt: What are three things you are grateful for today?</p>
+                </div>
+                <textarea id="journal-entry" placeholder="Write your thoughts here..."></textarea>
+                <button class="btn-primary" onclick="saveJournal()">
+                    <i class="fas fa-save"></i> Save Entry
+                </button>
+            </div>
+        </div>
+
+        <!-- Affirmation Modal -->
+        <div id="affirmation-modal" class="modal hidden">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeAffirmation()">&times;</button>
+                <div class="affirmation-container">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <p id="affirmation-text" class="affirmation-text"></p>
+                    <button class="btn-secondary" onclick="showAffirmation()">
+                        <i class="fas fa-sync"></i> New Affirmation
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Crisis Info Modal -->
-        <div id="crisis-modal" class="modal hidden">
+        <!-- Timer Modal -->
+        <div id="timer-modal" class="modal hidden">
             <div class="modal-content">
-                <button class="close-btn" onclick="closeCrisisModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <div class="crisis-info">
-                    <h2><i class="fas fa-heart"></i> You Are Not Alone</h2>
-                    <p class="crisis-intro">If you are in crisis, please reach out. Help is available 24/7.</p>
-                    
-                    <div class="crisis-contacts">
-                        <div class="crisis-item">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <h4>988 Suicide & Crisis Lifeline</h4>
-                                <p>Call or text 988</p>
-                            </div>
-                        </div>
-                        <div class="crisis-item">
-                            <i class="fas fa-comment"></i>
-                            <div>
-                                <h4>Crisis Text Line</h4>
-                                <p>Text HOME to 741741</p>
-                            </div>
-                        </div>
-                        <div class="crisis-item">
-                            <i class="fas fa-ambulance"></i>
-                            <div>
-                                <h4>Emergency Services</h4>
-                                <p>Call 911</p>
-                            </div>
-                        </div>
-                    </div>
+                <button class="close-btn" onclick="closeTimer()">&times;</button>
+                <h2><i class="fas fa-clock"></i> Mindfulness Timer</h2>
+                <div class="timer-display" id="timer-display">05:00</div>
+                <div class="timer-controls">
+                    <button onclick="setTimer(3)">3 min</button>
+                    <button onclick="setTimer(5)">5 min</button>
+                    <button onclick="setTimer(10)">10 min</button>
+                    <button onclick="setTimer(20)">20 min</button>
+                </div>
+                <div class="timer-buttons">
+                    <button class="btn-primary" id="timer-start" onclick="startTimer()">
+                        <i class="fas fa-play"></i> Start
+                    </button>
+                    <button class="btn-secondary" onclick="resetTimer()">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
         <footer class="footer">
-            <div class="footer-content">
-                <p><i class="fas fa-heart"></i> Remember: You are not alone. Help is always available.</p>
-                <p class="footer-small">YouthGuard - Your Mental Health Companion</p>
-            </div>
+            <p><i class="fas fa-heart"></i> Remember: You are not alone. Help is always available. <i class="fas fa-heart"></i></p>
+            <p class="footer-small">If you are in crisis, please reach out to Sumithrayo (+94 11 269 2909) or CCCline (1333)</p>
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
