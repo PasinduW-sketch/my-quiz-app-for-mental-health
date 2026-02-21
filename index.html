@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouthGuard - Mental Health Companion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
+                    <path d="M16 8C16 8 20 12 20 16C20 20 16 24 16 24C16 24 12 20 12 16C12 12 16 8 16 8Z" fill="currentColor"/>
+                </svg>
+                <span>YouthGuard</span>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-section="quiz">Mood Check</button>
+                <button class="nav-btn" data-section="chatbot">Talk to Us</button>
+                <button class="nav-btn" data-section="resources">Resources</button>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section id="quiz-section" class="section active">
+                <div class="hero">
+                    <h1>How are you feeling today?</h1>
+                    <p>Select your current mood to get personalized support</p>
+                </div>
+                <div class="mood-grid">
+                    <button class="mood-card" data-mood="Happy">
+                        <span class="mood-emoji">??</span>
+                        <span class="mood-label">Happy</span>
+                    </button>
+                    <button class="mood-card" data-mood="Sad">
+                        <span class="mood-emoji">??</span>
+                        <span class="mood-label">Sad</span>
+                    </button>
+                    <button class="mood-card" data-mood="Stressed">
+                        <span class="mood-emoji">??</span>
+                        <span class="mood-label">Stressed</span>
+                    </button>
+                    <button class="mood-card" data-mood="Angry">
+                        <span class="mood-emoji">??</span>
+                        <span class="mood-label">Angry</span>
+                    </button>
+                    <button class="mood-card" data-mood="Anxious">
+                        <span class="mood-emoji">??</span>
+                        <span class="mood-label">Anxious</span>
+                    </button>
+                </div>
+                <div id="mood-result" class="mood-result hidden">
+                    <div class="result-card">
+                        <h2 id="result-title"></h2>
+                        <p id="result-message"></p>
+                        <div class="songs-section">
+                            <h3>Recommended for you</h3>
+                            <div id="songs-list" class="songs-list"></div>
+                        </div>
+                        <button class="btn-secondary" onclick="resetQuiz()">Check Again</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="chatbot-section" class="section">
+                <div class="hero">
+                    <h1>Need someone to talk to?</h1>
+                    <p>Share what is on your mind. We are here to listen.</p>
+                </div>
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="message bot-message">
+                            <div class="message-avatar">??</div>
+                            <div class="message-content">
+                                <p>Hi there! I am here to support you. How are you feeling today?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
+                        <button id="send-btn" class="send-btn">Send</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="resources-section" class="section">
+                <div class="hero">
+                    <h1>Mental Health Resources</h1>
+                    <p>Helpful tools and information for your wellbeing</p>
+                </div>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">??</div>
+                        <h3>Breathing Exercise</h3>
+                        <p>Try the 4-7-8 breathing technique</p>
+                        <button class="btn-primary" onclick="startBreathing()">Start Exercise</button>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">??</div>
+                        <h3>Journaling Prompts</h3>
+                        <ul>
+                            <li>What are 3 things you are grateful for?</li>
+                            <li>What is one small win from today?</li>
+                        </ul>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">??</div>
+                        <h3>Emergency Contacts</h3>
+                        <ul>
+                            <li>National Suicide Prevention: 988</li>
+                            <li>Crisis Text Line: Text HOME to 741741</li>
+                        </ul>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">??</div>
+                        <h3>Self-Care Tips</h3>
+                        <ul>
+                            <li>Get 7-9 hours of sleep</li>
+                            <li>Take regular breaks from screens</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div id="breathing-modal" class="modal hidden">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeBreathing()">&times;</button>
+                <div class="breathing-exercise">
+                    <div class="breathing-circle">
+                        <span id="breathing-text">Breathe In</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Remember: You are not alone. Help is always available. ??</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
